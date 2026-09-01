@@ -18,6 +18,7 @@ public class Dado {
         lblDado.setIcon(imgDado);
     }
 
+    // Getter: metodo o funcion que devuelve el valor de un atributo privado
     public int getNumero() {
         return numero;
     }

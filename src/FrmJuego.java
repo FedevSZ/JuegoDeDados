@@ -14,19 +14,19 @@ public class FrmJuego extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
-        // cargar la imagen de una de las caras
-        String rutaImagen = "imagenes/2.jpeg";
+        // cargar una imagen que corresponda una de las caras de los dados
+        String rutaImagen = "imagenes/3.jpg";
         ImageIcon imgDado = new ImageIcon(getClass().getResource(rutaImagen));
 
-        JLabel lblDado1 = new JLabel(imgDado);
+        lblDado1 = new JLabel(imgDado);
         lblDado1.setBounds(10, 10, imgDado.getIconWidth(), imgDado.getIconHeight());
         add(lblDado1);
 
-        JLabel lblDado2 = new JLabel(imgDado);
+        lblDado2 = new JLabel(imgDado);
         lblDado2.setBounds(20 + imgDado.getIconWidth(), 10, imgDado.getIconWidth(), imgDado.getIconHeight());
         add(lblDado2);
 
-         JLabel lblTituloLanzamientos = new JLabel("Lanzamientos");
+        JLabel lblTituloLanzamientos = new JLabel("Lanzamientos");
         lblTituloLanzamientos.setBounds(30 + 2 * imgDado.getIconWidth(), 10, 100, 25);
         lblTituloLanzamientos.setHorizontalAlignment(JLabel.CENTER);
         add(lblTituloLanzamientos);
@@ -36,25 +36,25 @@ public class FrmJuego extends JFrame {
         lblTituloCenas.setHorizontalAlignment(JLabel.CENTER);
         add(lblTituloCenas);
 
-         JLabel lblLanzamientos = new JLabel("0");
-         lblLanzamientos.setBounds(30 + 2 * imgDado.getIconWidth(), 45, 100, 100);
-         lblLanzamientos.setFont(new Font("Impact", Font.BOLD, 72));
-         lblLanzamientos.setHorizontalAlignment(JLabel.RIGHT);
-         lblLanzamientos.setBackground(new Color(0,0,0));
-         lblLanzamientos.setForeground(new Color(0,255,0));
-         lblLanzamientos.setOpaque(true);
-         add(lblLanzamientos);
+        lblLanzamientos = new JLabel("0");
+        lblLanzamientos.setBounds(30 + 2 * imgDado.getIconWidth(), 45, 100, 100);
+        lblLanzamientos.setFont(new Font("Impact", Font.BOLD, 72));
+        lblLanzamientos.setHorizontalAlignment(JLabel.RIGHT);
+        lblLanzamientos.setBackground(new Color(0, 0, 0));
+        lblLanzamientos.setForeground(new Color(0, 255, 0));
+        lblLanzamientos.setOpaque(true);
+        add(lblLanzamientos);
 
-         JLabel lblCenas = new JLabel("0");
-         lblCenas.setBounds(140 + 2 * imgDado.getIconWidth(), 45, 100, 100);
-         lblCenas.setFont(new Font("Impact", Font.BOLD, 72));
-         lblCenas.setHorizontalAlignment(JLabel.RIGHT);
-         lblCenas.setBackground(new Color(0,0,0));
-         lblCenas.setForeground(new Color(0,255,0));
-         lblCenas.setOpaque(true);
-         add(lblCenas);
+        lblCenas = new JLabel("0");
+        lblCenas.setBounds(140 + 2 * imgDado.getIconWidth(), 45, 100, 100);
+        lblCenas.setFont(new Font("Impact", Font.BOLD, 72));
+        lblCenas.setHorizontalAlignment(JLabel.RIGHT);
+        lblCenas.setBackground(new Color(0, 0, 0));
+        lblCenas.setForeground(new Color(0, 255, 0));
+        lblCenas.setOpaque(true);
+        add(lblCenas);
 
-         JButton btnIniciar = new JButton("Iniciar");
+        JButton btnIniciar = new JButton("Iniciar");
         btnIniciar.setBounds(10, 20 + imgDado.getIconHeight(), 100, 25);
         add(btnIniciar);
 
@@ -62,25 +62,49 @@ public class FrmJuego extends JFrame {
         btnLanzar.setBounds(10, 55 + imgDado.getIconHeight(), 100, 25);
         add(btnLanzar);
 
-        // Eventos
-        btnIniciar.addActionListener(evento ->{
+        // eventos
+        btnIniciar.addActionListener(evento -> {
             iniciarLanzamientos();
         });
 
-        btnLanzar.addActionListener(evento ->{
+        btnLanzar.addActionListener(evento -> {
             realizarLanzamiento();
         });
-
     }
 
-    private void iniciarLanzamientos(){
+    // variables y objetos globales
+    private JLabel lblDado1, lblDado2, lblLanzamientos, lblCenas;
+    private Dado dado1 = new Dado();
+    private Dado dado2 = new Dado();
 
+    private int lanzamientos, cenas;
+
+    private void iniciarLanzamientos() {
+        lanzamientos = 0;
+        lblLanzamientos.setText("0");
+
+        cenas=0;
+        lblCenas.setText("0");
     }
 
-    private void realizarLanzamiento(){
+    private void realizarLanzamiento() {
+        // lanzar dados
+        dado1.lanzar();
+        dado2.lanzar();
 
+        // mostrar dados
+        dado1.mostrar(lblDado1);
+        dado2.mostrar(lblDado2);
+
+        // contar lanzamientos
+        lanzamientos++;
+        lblLanzamientos.setText(String.valueOf(lanzamientos));
+
+        // contar cenas
+        if (dado1.getNumero() + dado2.getNumero() >= 11) {
+            cenas++;
+            lblCenas.setText(String.valueOf(cenas));
+        }
     }
 
-
-    
 }
